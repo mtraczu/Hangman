@@ -83,9 +83,10 @@ def start_game():
             if player_input.lower() == "y":
                 start_game()
             elif player_input.lower() == "n":
-                main()
+                break
             else:
                 print("Wybrales nieprawidlowa opcje")
+        break
 
 
 def main():
