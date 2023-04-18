@@ -1,10 +1,10 @@
 import hangman_printer
 import random
 
-# list_of_words_animals = ["elephant", "tiger", "monkey", "lion", "butterfly"]
-list_of_words_animals = ["monkey", "lion"]
-# list_of_words_fruits = ["apple", "banana", "grapefruit", "strawberry"]
-list_of_words_fruits = ["apple", "banana"]
+list_of_words_animals = ["elephant", "tiger", "monkey", "lion",
+                         "butterfly", "duck", "horse", "pig", "turtle", "cat", "dog"]
+list_of_words_fruits = ["apple", "banana", "grapefruit", "strawberry", "orange", "watermelon",
+                        "pineapple", "grapefruit"]
 
 
 def wrong_answer(chances):
@@ -25,23 +25,23 @@ def good_answer(player_input, player_word, word):
 def print_hangman(chances, player_word):
     if chances == 5:
         print(hangman_printer.status1)
-        print("Nieprawidlowe slowo, zostalo ci " + str(chances) + " proby")
+        print("Incorrect letter, " + str(chances) + " chances left")
         print(player_word)
     elif chances == 4:
         print(hangman_printer.status2)
-        print("Nieprawidlowe slowo, zostalo ci " + str(chances) + " proby")
+        print("Incorrect letter, " + str(chances) + " chances left")
         print(player_word)
     elif chances == 3:
         print(hangman_printer.status3)
-        print("Nieprawidlowe slowo, zostalo ci " + str(chances) + " proby")
+        print("Incorrect letter, " + str(chances) + " chances left")
         print(player_word)
     elif chances == 2:
         print(hangman_printer.status4)
-        print("Nieprawidlowe slowo, zostalo ci " + str(chances) + " proby")
+        print("Incorrect letter, " + str(chances) + " chances left")
         print(player_word)
     elif chances == 1:
         print(hangman_printer.status5)
-        print("Nieprawidlowe slowo, zostalo ci " + str(chances) + " proby")
+        print("Incorrect letter, " + str(chances) + " chance left")
         print(player_word)
     elif chances == 0:
         print(player_word)
@@ -53,9 +53,9 @@ def game(list_of_words):
     player_word = "*" * len(word)
     chances = 6
     used_letters = []
-    print("twoje slowo to: " + player_word + " zaczynasz z czysta karta")
+    print("Your word: " + player_word + " ,you start with 6 chances")
     while chances > 0 and word != player_word:
-        player_input = input("wybierz litere: ").lower()
+        player_input = input("Select letter: ").lower()
         if player_input in word and player_input not in used_letters:
             player_word = good_answer(player_input, player_word, word)
             used_letters.append(player_input)
@@ -65,59 +65,59 @@ def game(list_of_words):
             print_hangman(chances, player_word)
             used_letters.append(player_input)
         else:
-            print("Uzyles juz te litery, wybierz inna")
+            print("You have already used these letters, choose another one")
     win_lose(player_word, word)
 
 
 def start_game():
     while True:
-        print("1. Zwierzeta")
-        print("2. Owoce")
-        player_input = input("Wybierz jaki rodzaj slowa chcesz odgadnac ")
+        print("1. Animals")
+        print("2. Fruits")
+        player_input = input("Choose what kind of word you want to guess: ")
         if player_input == str(1):
             game(list_of_words_animals)
         elif player_input == str(2):
             game(list_of_words_fruits)
         while True:
-            player_input = input("Chcesz zagrac jeszcze raz? y/n: ")
+            player_input = input("Would you like to play again? y/n: ")
             if player_input.lower() == "y":
                 start_game()
             elif player_input.lower() == "n":
                 break
             else:
-                print("Wybrales nieprawidlowa opcje")
+                print("You have chosen the wrong option")
         break
 
 
 def main():
     while True:
         print(hangman_printer.start)
-        print("1. Rozpocznij gre")
-        print("2. Pokaz odkryte slowa")
-        print("3. Wyjdz z gry")
-        player_input = input("Wybierz opcje: ")
+        print("1. Start game")
+        print("2. Show guessed words")
+        print("3. Quit")
+        player_input = input("Choose option: ")
         if player_input == str(1):
             start_game()
         elif player_input == str(2):
             text_file = open("guessed_words.txt", "r")
             text_file = text_file.read()
             print(text_file)
-            player_choice = input("Wcisnij przycisk zeby wyjsc")
+            input("Press enter to exit")
         elif player_input == str(3):
             print("Goodbye")
             break
         else:
-            print("Wybrales nieprawidlowa opcje")
+            print("You have chosen the wrong option")
 
 
 def win_lose(player_word, word):
     if player_word == word:
-        print("Gratulacje, wygrales. Twoje slowo zostalo zapisane")
+        print("Congratulations, the correct word is " + player_word + ". Discovered word has been saved.")
         text_file = open("guessed_words.txt", "a")
         text_file.write(player_word + "\n")
         text_file.close()
     else:
-        print("Przegrales")
+        print("You lose")
 
 
 main()
