@@ -55,7 +55,7 @@ def game(list_of_words):
     used_letters = []
     print("twoje slowo to: " + player_word + " zaczynasz z czysta karta")
     while chances > 0 and word != player_word:
-        player_input = input("wybierz litere: ")
+        player_input = input("wybierz litere: ").lower()
         if player_input in word and player_input not in used_letters:
             player_word = good_answer(player_input, player_word, word)
             used_letters.append(player_input)
@@ -99,7 +99,10 @@ def main():
         if player_input == str(1):
             start_game()
         elif player_input == str(2):
-            print("DO ZROBIENIA")
+            text_file = open("guessed_words.txt", "r")
+            text_file = text_file.read()
+            print(text_file)
+            player_choice = input("Wcisnij przycisk zeby wyjsc")
         elif player_input == str(3):
             print("Goodbye")
             break
@@ -109,7 +112,10 @@ def main():
 
 def win_lose(player_word, word):
     if player_word == word:
-        print("Gratulacje, wygrales")
+        print("Gratulacje, wygrales. Twoje slowo zostalo zapisane")
+        text_file = open("guessed_words.txt", "a")
+        text_file.write(player_word + "\n")
+        text_file.close()
     else:
         print("Przegrales")
 
